@@ -1,9 +1,6 @@
 use std::fmt::Debug;
 use std::marker::PhantomData;
-use std::ops::Deref;
 
-use bevy::ecs::query::QueryData;
-use bevy::ecs::system::SystemId;
 use bevy::prelude::*;
 use bevy::render::camera::CameraRenderGraph;
 use bevy::render::extract_component::{ExtractComponent, ExtractComponentPlugin};
@@ -11,22 +8,18 @@ use bevy::render::render_resource::encase::internal::WriteInto;
 use bevy::render::render_resource::{
     Extent3d, ShaderType, TextureDescriptor, TextureDimension, TextureFormat, TextureUsages,
 };
-use bevy::sprite::Material2d;
-use bevy::utils::{HashMap, info};
-use bevy_egui::egui::{Align, CollapsingHeader};
+use bevy::utils::HashMap;
 use bevy_egui::{egui, EguiContexts};
 
 use types::composite::TextureOpCompositePlugin;
 use types::ramp::TextureOpRampPlugin;
 
-use crate::index::{UniqueIndex, UniqueIndexPlugin};
+use crate::index::UniqueIndex;
 use crate::event::SpawnOp;
 use crate::op::texture::render::TextureOpSubGraph;
-use crate::op::texture::types::composite::CompositeMode;
 use crate::op::texture::types::noise::TextureOpNoisePlugin;
-use crate::op::texture::types::ramp::{TextureRampMode, TextureRampSettings};
 use crate::param::{
-    ParamBundle, ParamName, ParamOrder, ParamPage, ParamValue, ScriptedParam, ScriptedParamError,
+    ParamBundle, ParamName, ParamOrder, ParamPage, ParamValue, ScriptedParamError,
 };
 use crate::ui::event::{Connect, Disconnect};
 use crate::ui::graph::{GraphRef, NodeMaterial, OpRef, SelectedNode};
@@ -86,7 +79,7 @@ fn setup(mut commands: Commands, mut images: ResMut<Assets<Image>>) {
     };
 
     image.resize(size);
-    /// All black
+    // All black
     image
         .data
         .chunks_mut(4)

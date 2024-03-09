@@ -4,12 +4,9 @@ use bevy::prelude::*;
 use bevy::render::extract_component::{ExtractComponent, ExtractComponentPlugin};
 use bevy::render::render_graph::{RenderLabel, RenderSubGraph};
 use bevy::render::render_resource::ShaderType;
-use bevy_egui::{egui, EguiContexts};
 
 use crate::op::texture::render::TextureOpRenderPlugin;
 use crate::op::texture::{spawn_top, update, TextureOpMeta, TextureOpType};
-use crate::ui::graph::SelectedNode;
-use crate::ui::UiState;
 
 #[derive(Default)]
 pub struct TextureOpCompositePlugin;

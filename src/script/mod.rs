@@ -2,7 +2,7 @@ mod asset;
 mod helper;
 
 use crate::index::{CompositeIndex2, UniqueIndex};
-use crate::param::{ParamName, ParamValue, ScriptedParamError};
+use crate::param::{ParamName, ParamValue};
 use crate::script::asset::{ProgramCache, Script, ScriptAssetPlugin};
 use crate::script::helper::RustylineHelper;
 use crate::op::texture::types::composite::TextureOpComposite;
@@ -13,22 +13,19 @@ use crate::ui::graph::{GraphRef, OpRef};
 use crate::OpName;
 use crate::Sets::Params;
 use bevy::app::AppExit;
-use bevy::asset::AssetContainer;
 use bevy::ecs::world::unsafe_world_cell::UnsafeWorldCell;
 use bevy::prelude::*;
-use bevy::utils::HashMap;
 use colored::Colorize;
 use rustyline::error::ReadlineError;
 use rustyline::highlight::MatchingBracketHighlighter;
 use rustyline::validate::MatchingBracketValidator;
-use rustyline::{DefaultEditor, Editor};
+use rustyline::Editor;
 use std::cell::RefCell;
-use std::ops::Deref;
 use std::rc::Rc;
 use std::sync::mpsc::{Receiver, TryRecvError};
 use rand::Rng;
 use steel::gc::unsafe_erased_pointers::CustomReference;
-use steel::rvals::{CustomType, IntoSteelVal};
+use steel::rvals::IntoSteelVal;
 use steel::steel_vm::engine::Engine;
 use steel::steel_vm::register_fn::RegisterFn;
 use steel::SteelVal;
@@ -44,7 +41,7 @@ impl Plugin for ScriptPlugin {
             .add_systems(First, clear_touched)
             .add_systems(Last, drop_untouched)
             .add_systems(Startup, setup)
-            .add_systems(Update, (update.in_set(Params)));
+            .add_systems(Update, update.in_set(Params));
     }
 }
 
@@ -142,8 +139,7 @@ fn setup(world: &mut World) {
             .consume(|engine, args| {
                 let world = args[0].clone();
                 engine
-                    .update_value("*world*", world)
-                    .expect("TODO: panic message");
+                    .register_value("*world*", world);
                 engine
                     .register_fn("-op", op)
                     .register_fn("-op!", op_bang)
@@ -197,7 +193,7 @@ fn update(world: &mut World) {
 
         let mut scripts = vec![];
         {
-            let mut query = world_cell.world_mut().query::<(&Handle<Script>)>();
+            let mut query = world_cell.world_mut().query::<&Handle<Script>>();
             let programs = world_cell
                 .world()
                 .get_non_send_resource::<ProgramCache>()
@@ -219,8 +215,7 @@ fn update(world: &mut World) {
             .consume(move |engine, args| {
                 let world = args[0].clone();
                 engine
-                    .update_value("*world*", world)
-                    .expect("TODO: panic message");
+                    .register_value("*world*", world);
                 engine.register_fn("-op", op).register_fn("-param", param);
 
                 if let Some(line) = &line {

@@ -2,7 +2,7 @@ use crate::Sets;
 use bevy::prelude::*;
 use bevy::render::render_resource::{AsBindGroup, ShaderRef};
 use bevy::sprite::{Material2d, Material2dPlugin, MaterialMesh2dBundle};
-use bevy::utils::{info, HashMap};
+use bevy::utils::HashMap;
 use bevy_mod_picking::prelude::*;
 use bevy_mod_picking::PickableBundle;
 use bevy_prototype_lyon::draw::Stroke;
@@ -14,12 +14,11 @@ use layout::core::style::StyleAttr;
 use layout::std_shapes::shapes::{Arrow, Element, ShapeKind};
 use layout::topo::layout::VisualGraph;
 use layout::topo::placer::Placer;
-use petgraph::stable_graph::{DefaultIx, IndexType, NodeIndex};
-use rand::{random, Rng};
+use petgraph::stable_graph::{DefaultIx, NodeIndex};
+use rand::Rng;
 
 use crate::op::texture::{
     TextureOp, TextureOpDefaultImage, TextureOpImage, TextureOpInputs, TextureOpOutputs,
-    TextureOpType,
 };
 use crate::ui::event::{ClickNode, Connect, Disconnect};
 use crate::ui::grid::InfiniteGridSettings;
@@ -280,7 +279,7 @@ fn spawn_port<T: Component>(
         port,
         Port,
         MaterialMesh2dBundle {
-            mesh: meshes.add(Mesh::from(shape::Circle::new(10.0))).into(),
+            mesh: meshes.add(Mesh::from(Circle::new(10.0))).into(),
             material: color_materials.add(Color::rgb(0.5, 0.5, 0.5)),
             transform: Transform::from_translation(translation),
             ..Default::default()

@@ -4,8 +4,6 @@ use crate::op::texture::TextureOpImage;
 use crate::param::{ParamBundle, ParamName, ParamOrder, ParamValue};
 use crate::ui::graph::OpRef;
 use crate::OpName;
-use bevy::asset::AssetContainer;
-use bevy::math::Vec4;
 use bevy::prelude::*;
 use bevy::render::camera::RenderTarget;
 use bevy::render::view::RenderLayers;

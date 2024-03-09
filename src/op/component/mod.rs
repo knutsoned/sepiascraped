@@ -1,13 +1,9 @@
 use crate::event::SpawnOp;
 use crate::op::component::types::window::ComponentOpWindowPlugin;
-use crate::op::texture::{TextureOp, TextureOpImage, TextureOpMeta, TextureOpType};
-use crate::param::{ParamBundle, ParamName, ParamOrder, ParamPage, ParamValue};
+use crate::param::ParamBundle;
 use crate::ui::graph::OpRef;
-use crate::OpName;
 use bevy::prelude::*;
 use bevy::render::extract_component::ExtractComponent;
-use bevy::render::render_resource::encase::internal::WriteInto;
-use bevy::render::render_resource::ShaderType;
 use std::fmt::Debug;
 use std::marker::PhantomData;
 
@@ -17,7 +13,7 @@ pub struct ComponentPlugin;
 
 impl Plugin for ComponentPlugin {
     fn build(&self, app: &mut App) {
-        app.add_plugins((ComponentOpWindowPlugin));
+        app.add_plugins(ComponentOpWindowPlugin);
     }
 }
 
@@ -51,7 +47,7 @@ pub fn spawn_component_op<T>(
     for entity in added_q.iter() {
         commands
             .entity(entity.clone())
-            .insert((ComponentOpBundle { op: ComponentOp }))
+            .insert(ComponentOpBundle { op: ComponentOp })
             .with_children(|parent| {
                 let common_params = vec![];
 

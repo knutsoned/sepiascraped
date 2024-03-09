@@ -1,11 +1,10 @@
 use std::marker::PhantomData;
 
-use bevy::asset::LoadState;
 use bevy::core_pipeline::fullscreen_vertex_shader::fullscreen_shader_vertex_state;
 use bevy::ecs::query::QueryItem;
 use bevy::prelude::*;
 use bevy::render::extract_component::{
-    ComponentUniforms, DynamicUniformIndex, ExtractComponent, ExtractComponentPlugin,
+    ComponentUniforms, DynamicUniformIndex, ExtractComponentPlugin,
     UniformComponentPlugin,
 };
 use bevy::render::render_asset::RenderAssets;
@@ -13,23 +12,20 @@ use bevy::render::render_graph::{
     NodeRunError, RenderGraphApp, RenderGraphContext, RenderLabel, RenderSubGraph, ViewNodeRunner,
 };
 use bevy::render::render_resource::binding_types::{sampler, texture_2d, uniform_buffer};
-use bevy::render::render_resource::encase::internal::WriteInto;
 use bevy::render::render_resource::{
     BindGroup, BindGroupEntry, BindGroupLayout, CachedRenderPipelineId, ColorTargetState,
     ColorWrites, FragmentState, IntoBinding, LoadOp, MultisampleState, Operations, PipelineCache,
     PrimitiveState, RenderPassColorAttachment, RenderPassDescriptor, RenderPipelineDescriptor,
-    SamplerBindingType, ShaderStages, ShaderType, SpecializedRenderPipeline,
+    SamplerBindingType, ShaderStages, SpecializedRenderPipeline,
     SpecializedRenderPipelines, StoreOp, TextureFormat, TextureSampleType,
 };
 use bevy::render::renderer::{RenderContext, RenderDevice};
 use bevy::render::texture::BevyDefault;
 use bevy::render::view::{ExtractedView, ViewTarget};
 use bevy::render::{render_graph, Render, RenderApp, RenderSet};
-use bevy::utils::{info, HashMap};
+use bevy::utils::HashMap;
 
-use crate::op::texture::types::composite::TextureOpComposite;
-use crate::op::texture::types::ramp::TextureOpRamp;
-use crate::op::texture::{TextureOpInputs, TextureOpMeta, TextureOpType};
+use crate::op::texture::{TextureOpInputs, TextureOpMeta};
 
 #[derive(Default)]
 pub struct TextureOpRenderPlugin<T> {

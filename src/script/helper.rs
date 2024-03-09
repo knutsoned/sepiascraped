@@ -1,8 +1,6 @@
 extern crate rustyline;
 use colored::*;
 
-use std::{cell::RefCell, rc::Rc};
-
 use rustyline::highlight::{Highlighter, MatchingBracketHighlighter};
 use rustyline::validate::{
     MatchingBracketValidator, ValidationContext, ValidationResult, Validator,
@@ -16,8 +14,6 @@ use rustyline::completion::Completer;
 use rustyline::completion::Pair;
 
 use std::borrow::Cow;
-
-use steel::steel_vm::engine::Engine;
 
 impl Completer for RustylineHelper {
     type Candidate = Pair;
